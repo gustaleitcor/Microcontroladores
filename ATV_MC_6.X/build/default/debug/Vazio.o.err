@@ -1,0 +1,4 @@
+Message[302] /home/gus/MPLABXProjects/ATV_MC_6.X/Vazio.ASM 165 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/gus/MPLABXProjects/ATV_MC_6.X/Vazio.ASM 167 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/gus/MPLABXProjects/ATV_MC_6.X/Vazio.ASM 169 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/gus/MPLABXProjects/ATV_MC_6.X/Vazio.ASM 173 : Register in operand not in bank 0.  Ensure that bank bits are correct.

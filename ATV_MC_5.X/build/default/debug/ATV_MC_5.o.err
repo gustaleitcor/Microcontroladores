@@ -1,0 +1,6 @@
+Message[302] /home/gus/MPLABXProjects/ATV_MC_5.X/ATV_MC_5.ASM 126 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/gus/MPLABXProjects/ATV_MC_5.X/ATV_MC_5.ASM 128 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/gus/MPLABXProjects/ATV_MC_5.X/ATV_MC_5.ASM 130 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/gus/MPLABXProjects/ATV_MC_5.X/ATV_MC_5.ASM 134 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[305] /home/gus/MPLABXProjects/ATV_MC_5.X/ATV_MC_5.ASM 166 : Using default destination of 1 (file).
+Message[305] /home/gus/MPLABXProjects/ATV_MC_5.X/ATV_MC_5.ASM 180 : Using default destination of 1 (file).

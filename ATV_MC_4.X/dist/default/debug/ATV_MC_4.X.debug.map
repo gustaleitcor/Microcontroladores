@@ -1,0 +1,56 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Tue Feb 25 07:17:27 2025
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000000
+                   .org_1       code   0x000000    program   0x000002
+                   .org_2       code   0x000004    program   0x0000ae
+.config_2007_/HOME/GUS/MPLABXPROJECTS/ATV_MC_       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000000      
+                            0x000004    0x00005a      
+                            0x002007    0x002007      
+            89 out of 1158 program addresses used, program memory utilization is 7%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                BLINK_LED   0x000047    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+                   INICIO   0x000017    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+                    LOOP1   0x000030    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+              LOOP1_SETUP   0x00002a    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+                    LOOP2   0x00003e    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+              LOOP2_SETUP   0x000039    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+                     MAIN   0x000029    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+                  SAI_INT   0x000011    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+       SLEEP_LOOP_LED_OFF   0x000057    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+        SLEEP_LOOP_LED_ON   0x00004e    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+               SUBROTINA1   0x000016    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                  SAI_INT   0x000011    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+               SUBROTINA1   0x000016    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+                   INICIO   0x000017    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+                     MAIN   0x000029    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+              LOOP1_SETUP   0x00002a    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+                    LOOP1   0x000030    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+              LOOP2_SETUP   0x000039    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+                    LOOP2   0x00003e    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+                BLINK_LED   0x000047    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+        SLEEP_LOOP_LED_ON   0x00004e    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+       SLEEP_LOOP_LED_OFF   0x000057    program     static /home/gus/MPLABXProjects/ATV_MC_4.X/ATV_MC_4.ASM
+
+

@@ -1,0 +1,502 @@
+MPASM 5.77  /HOME/GUS/MPLABXPROJECTS/ATV_MC_   3-9-2025  15:30:53         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00002 ;*              MODIFICAÃ‡Ã•ES PARA USO COM 12F675                   *
+                      00003 ;*                FEITAS PELO PROF. MARDSON                        *
+                      00004 ;*                      DEZEMBRO DE 2024                           *
+                      00005 ;*                 BASEADO NO EXEMPLO DO LIVRO                     *
+                      00006 ;*           Desbravando o PIC. David JosÃ© de Souza                *
+                      00007 ;*-----------------------------------------------------------------*
+                      00008 ;*   MODELO PARA O PIC 12F675                                      *
+                      00009 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00010 
+                      00011 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00012 ;*                     ARQUIVOS DE DEFINIÃ‡Ã•ES                      *
+                      00013 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00014 #INCLUDE <p12f675.inc>  ;ARQUIVO PADRÃƒO MICROCHIP PARA 12F675
+                      00001         LIST
+                      00002 
+                      00003 ;==========================================================================
+                      00004 ; Build date : Nov 22 2017
+                      00005 ;  MPASM PIC12F675 processor include
+                      00006 ; 
+                      00007 ;  (c) Copyright 1999-2017 Microchip Technology, All rights reserved
+                      00008 ;==========================================================================
+                      00009 
+                      00367         LIST
+                      00015 
+2007   3FA4           00016         __CONFIG _BODEN_OFF & _CP_OFF & _PWRTE_ON & _WDT_OFF & _MCLRE_ON & _INTRC_OSC_NOCLKOUT
+                      00017 
+                      00018 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00019 ;*                    PAGINAÃ‡ÃƒO DE MEMÃ“RIA                         *
+                      00020 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00021 ;DEFINIÃ‡ÃƒO DE COMANDOS DE USUÃRIO PARA ALTERAÃ‡ÃƒO DA PÃGINA DE MEMÃ“RIA
+                      00022 #DEFINE BANK0   BCF STATUS,RP0  ;SETA BANK 0 DE MEMÃ“RIA
+                      00023 #DEFINE BANK1   BSF STATUS,RP0  ;SETA BANK 1 DE MAMÃ“RIA
+                      00024 
+                      00025 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00026 ;*                         VARIÃVEIS                               *
+                      00027 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00028 ; DEFINIÃ‡ÃƒO DOS NOMES E ENDEREÃ‡OS DE TODAS AS VARIÃVEIS UTILIZADAS 
+                      00029 ; PELO SISTEMA
+                      00030 
+                      00031         CBLOCK  0x20    ;ENDEREÃ‡O INICIAL DA MEMÃ“RIA DE
+                      00032                                         ;USUÃRIO
+  00000020            00033                 W_TEMP          ;REGISTRADORES TEMPORÃRIOS PARA USO
+  00000021            00034                 STATUS_TEMP     ;JUNTO Ã€S INTERRUPÃ‡Ã•ES
+  00000022            00035                 COUNTER
+                      00036 
+                      00037                 ;COLOQUE AQUI SUAS NOVAS VARIÃVEIS
+                      00038                 ;NÃƒO ESQUEÃ‡A COMENTÃRIOS ESCLARECEDORES
+                      00039 
+                      00040         ENDC                    ;FIM DO BLOCO DE DEFINIÃ‡ÃƒO DE VARIÃVEIS
+                      00041 
+                      00042 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00043 ;*                        FLAGS INTERNOS                           *
+MPASM 5.77  /HOME/GUS/MPLABXPROJECTS/ATV_MC_   3-9-2025  15:30:53         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00044 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00045 ; DEFINIÃ‡ÃƒO DE TODOS OS FLAGS UTILIZADOS PELO SISTEMA
+                      00046 
+                      00047 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00048 ;*                         CONSTANTES                              *
+                      00049 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00050 ; DEFINIÃ‡ÃƒO DE TODAS AS CONSTANTES UTILIZADAS PELO SISTEMA
+                      00051 
+                      00052 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00053 ;*                           ENTRADAS                              *
+                      00054 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00055 ; DEFINIÃ‡ÃƒO DE TODOS OS PINOS QUE SERÃƒO UTILIZADOS COMO ENTRADA
+                      00056 ; RECOMENDAMOS TAMBÃ‰M COMENTAR O SIGNIFICADO DE SEUS ESTADOS (0 E 1)
+                      00057 
+                      00058 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00059 ;*                           SAÃDAS                                *
+                      00060 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00061 ; DEFINIÃ‡ÃƒO DE TODOS OS PINOS QUE SERÃƒO UTILIZADOS COMO SAÃDA
+                      00062 ; RECOMENDAMOS TAMBÃ‰M COMENTAR O SIGNIFICADO DE SEUS ESTADOS (0 E 1)
+                      00063 
+                      00064 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00065 ;*                       VETOR DE RESET                            *
+                      00066 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00067 
+0000                  00068         ORG     0x00                    ;ENDEREÃ‡O INICIAL DE PROCESSAMENTO
+0000   280E           00069         GOTO    INICIO
+                      00070         
+                      00071 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00072 ;*                    INÃCIO DA INTERRUPÃ‡ÃƒO                        *
+                      00073 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00074 ; ENDEREÃ‡O DE DESVIO DAS INTERRUPÃ‡Ã•ES. A PRIMEIRA TAREFA Ã‰ SALVAR OS
+                      00075 ; VALORES DE "W" E "STATUS" PARA RECUPERAÃ‡ÃƒO FUTURA
+                      00076 
+0004                  00077         ORG     0x04            ; 0x04 é o endereço padrão para o vetor de interrupção em microcontrolad
+                            ores PIC.
+0004   130C           00078         BCF     PIR1, ADIF      ; Limpa o flag de interrupção do conversor A/D (ADIF no registrador PIR1
+                            ). Isso informa ao hardware que a interrupção foi tratada.
+0005   149F           00079         BSF     ADCON0, 1       ; Reinicia o conversor A/D, setando o bit 1 do registrador ADCON0 (inici
+                            a uma nova conversão).
+0006   0000           00080         NOP                     ; No Operation (não faz nada, mas consome um ciclo de clock). Usado para
+                             garantir um pequeno atraso estratégico.
+0007   0009           00081         RETFIE                  ; Retorna da interrupção e reabilita as interrupções globais (GIE é auto
+                            maticamente setado).
+                      00082         
+                      00083 
+                      00084 
+                      00085 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00086 ;*                    ROTINA DE INTERRUPÃ‡ÃƒO                        *
+                      00087 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00088 ; AQUI SERÃƒO ESCRITAS AS ROTINAS DE RECONHECIMENTO E TRATAMENTO DAS
+                      00089 ; INTERRUPÃ‡Ã•ES
+                      00090 
+                      00091 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+MPASM 5.77  /HOME/GUS/MPLABXPROJECTS/ATV_MC_   3-9-2025  15:30:53         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00092 ;*                 ROTINA DE SAÃDA DA INTERRUPÃ‡ÃƒO                  *
+                      00093 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00094 ; OS VALORES DE "W" E "STATUS" DEVEM SER RECUPERADOS ANTES DE 
+                      00095 ; RETORNAR DA INTERRUPÃ‡ÃƒO
+                      00096 
+0008                  00097 SAI_INT
+0008   0E21           00098         SWAPF   STATUS_TEMP,W
+0009   0083           00099         MOVWF   STATUS          ;MOVE STATUS_TEMP PARA STATUS
+000A   0EA0           00100         SWAPF   W_TEMP,F
+000B   0E20           00101         SWAPF   W_TEMP,W        ;MOVE W_TEMP PARA W
+                      00102         
+                      00103 
+                      00104         
+000C   0009           00105         RETFIE
+                      00106 
+                      00107 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00108 ;*                       ROTINAS E SUBROTINAS                      *
+                      00109 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00110 ; CADA ROTINA OU SUBROTINA DEVE POSSUIR A DESCRIÃ‡ÃƒO DE FUNCIONAMENTO
+                      00111 ; E UM NOME COERENTE Ã€S SUAS FUNÃ‡Ã•ES.
+                      00112 
+000D                  00113 SUBROTINA1
+                      00114 
+                      00115         ;CORPO DA ROTINA
+                      00116 
+000D   0008           00117         RETURN
+                      00118 
+                      00119 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00120 ;*                     INICIO DO PROGRAMA                          *
+                      00121 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00122         
+000E                  00123 INICIO
+000E   1683           00124         BANK1                           ;ALTERA PARA O BANCO 1
+000F   3010           00125         MOVLW   B'00010000' ;CONFIGURA TODAS AS PORTAS DO GPIO (PINOS)
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0010   0085           00126         MOVWF   TRISIO          ;COMO SAÍDAS
+0011   3018           00127         MOVLW   B'00011000'
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0012   009F           00128         MOVWF   ANSEL           ;DEFINE PORTAS COMO Digital I/O
+0013   3004           00129         MOVLW   B'00000100'
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0014   0081           00130         MOVWF   OPTION_REG      ;DEFINE OPÇÕES DE OPERAÇÃO
+0015   30C0           00131         MOVLW   B'11000000'
+0016   008B           00132         MOVWF   INTCON          ;DEFINE OPÇÕES DE INTERRUPÇÕES
+0017   3040           00133         MOVLW   B'01000000'
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0018   008C           00134         MOVWF   PIE1            ;DEFINE OPÇÕES DE INTERRUPÇÕES
+0019   1283           00135         BANK0                           ;RETORNA PARA O BANCO
+001A   3007           00136         MOVLW   B'00000111'
+001B   0099           00137         MOVWF   CMCON           ;DEFINE O MODO DE OPERAÇÃO DO COMPARADOR ANALÓGICO
+001C   300F           00138         MOVLW   B'00001111'
+001D   009F           00139         MOVWF   ADCON0          ;DEFINE O MODO DE OPERAÇÃO DO CONVERSOR A/D
+001E   3040           00140         MOVLW   B'01000000'
+MPASM 5.77  /HOME/GUS/MPLABXPROJECTS/ATV_MC_   3-9-2025  15:30:53         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+001F   008C           00141         MOVWF   PIR1            ;DEFINE OPÇÕES DE INTERRUPÇÕES
+                      00142         
+                      00143 
+                      00144 
+                      00145 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00146 ;*                     INICIALIZAÃ‡ÃƒO DAS VARIÃVEIS                 *
+                      00147 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00148 
+                      00149 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00150 ;*                     ROTINA PRINCIPAL                            *
+                      00151 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00152         
+0020                  00153 MAIN    
+0020   081E           00154         MOVFW   ADRESH          ; Move o valor do registrador ADRESH (parte alta do resultado da convers
+                            ão A/D) para o registrador W (working register).
+                      00155         
+0021   3CFA           00156         SUBLW   .250            ; Subtrai o valor 250 do valor em W (W = 250 - W). O resultado é armazen
+                            ado em W.
+0022   1903           00157         BTFSC   STATUS, Z       ; Verifica o bit de zero (Z) no registrador STATUS. Se Z = 1 (ou seja, s
+                            e W = 250), pula a próxima instrução.
+0023   282C           00158         GOTO    JUMP_LOOP_1     ; Se Z = 1, vai para o rótulo JUMP_LOOP_1 (tratamento especial para o va
+                            lor 250).
+0024   1803           00159         BTFSC   STATUS, C       ; Verifica o bit de carry (C) no registrador STATUS. Se C = 1 (ou seja, 
+                            se W >= 250), pula a próxima instrução.
+0025   1005           00160         BCF GPIO, GP0           ; Se C = 1, limpa o bit GP0 do registrador GPIO (define o pino GP0 como 
+                            0).
+0026   00A2           00161         MOVWF   COUNTER         ; Move o valor de W para o registrador COUNTER.
+0027                  00162 LOOP_1
+0027   0000           00163         NOP                     ; No Operation (não faz nada, apenas espera um ciclo de clock).
+0028   0000           00164         NOP                     ; Outro NOP.
+0029   0000           00165         NOP                     ; Mais um NOP.
+Message[305]: Using default destination of 1 (file).
+002A   0BA2           00166         DECFSZ  COUNTER         ; Decrementa o valor de COUNTER. Se COUNTER = 0, pula a próxima instruçã
+                            o.
+002B   2827           00167         GOTO    LOOP_1          ; Se COUNTER não for zero, volta para LOOP_1.
+                      00168 
+002C                  00169 JUMP_LOOP_1
+002C   081E           00170         MOVFW   ADRESH          ; Move o valor de ADRESH para W novamente.
+002D   00A2           00171         MOVWF   COUNTER         ; Move o valor de W para COUNTER.
+                      00172         
+002E   3C00           00173         SUBLW   .0              ; Subtrai 0 de W (W = 0 - W)
+002F   1D03           00174         BTFSS   STATUS, Z       ; Verifica o bit de zero (Z) no registrador STATUS. Se Z = 0 (ou seja, s
+                            e W != 0), pula a próxima instrução.
+0030   1405           00175         BSF     GPIO, GP0       ; Se Z = 0, define o bit GP0 do registrador GPIO como 1 (liga o pino GP0
+                            ).
+0031                  00176 LOOP_2
+0031   0000           00177         NOP                     ; No Operation.
+0032   0000           00178         NOP                     ; Outro NOP.
+0033   0000           00179         NOP                     ; Mais um NOP.
+Message[305]: Using default destination of 1 (file).
+0034   0BA2           00180         DECFSZ  COUNTER         ; Decrementa o valor de COUNTER. Se COUNTER = 0, pula a próxima instruçã
+                            o.
+0035   2831           00181         GOTO    LOOP_2          ; Se COUNTER não for zero, volta para LOOP_2.
+MPASM 5.77  /HOME/GUS/MPLABXPROJECTS/ATV_MC_   3-9-2025  15:30:53         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0036   2820           00182         GOTO    MAIN            ; Volta para o início do programa (MAIN).
+                      00183         
+                      00184         
+                      00185 
+                      00186 
+                      00187 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00188 ;*                       FIM DO PROGRAMA                           *
+                      00189 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00190 
+                      00191     END
+MPASM 5.77  /HOME/GUS/MPLABXPROJECTS/ATV_MC_   3-9-2025  15:30:53         PAGE  6
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ADCON0                            0000001F
+ADCS0                             00000004
+ADCS1                             00000005
+ADCS2                             00000006
+ADFM                              00000007
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRESH                            0000001E
+ADRESL                            0000009E
+ANS0                              00000000
+ANS1                              00000001
+ANS2                              00000002
+ANS3                              00000003
+ANSEL                             0000009F
+BANK0                             BCF STATUS,RP0
+BANK1                             BSF STATUS,RP0
+C                                 00000000
+CAL0                              00000002
+CAL1                              00000003
+CAL2                              00000004
+CAL3                              00000005
+CAL4                              00000006
+CAL5                              00000007
+CHS0                              00000002
+CHS1                              00000003
+CINV                              00000004
+CIS                               00000003
+CM0                               00000000
+CM1                               00000001
+CM2                               00000002
+CMCON                             00000019
+CMIE                              00000003
+CMIF                              00000003
+COUNTER                           00000022
+COUT                              00000006
+DC                                00000001
+EEADR                             0000009B
+EECON1                            0000009C
+EECON2                            0000009D
+EEDAT                             0000009A
+EEDATA                            0000009A
+EEIE                              00000007
+EEIF                              00000007
+F                                 00000001
+FSR                               00000004
+GIE                               00000007
+GO                                00000001
+GO_DONE                           00000001
+GO_NOT_DONE                       00000001
+GP0                               00000000
+GP1                               00000001
+GP2                               00000002
+MPASM 5.77  /HOME/GUS/MPLABXPROJECTS/ATV_MC_   3-9-2025  15:30:53         PAGE  7
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+GP3                               00000003
+GP4                               00000004
+GP5                               00000005
+GPIE                              00000003
+GPIF                              00000000
+GPIO                              00000005
+GPIO0                             00000000
+GPIO1                             00000001
+GPIO2                             00000002
+GPIO3                             00000003
+GPIO4                             00000004
+GPIO5                             00000005
+INDF                              00000000
+INICIO                            0000000E
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IOC                               00000096
+IOC0                              00000000
+IOC1                              00000001
+IOC2                              00000002
+IOC3                              00000003
+IOC4                              00000004
+IOC5                              00000005
+IOCB                              00000096
+IOCB0                             00000000
+IOCB1                             00000001
+IOCB2                             00000002
+IOCB3                             00000003
+IOCB4                             00000004
+IOCB5                             00000005
+IRP                               00000007
+JUMP_LOOP_1                       0000002C
+LOOP_1                            00000027
+LOOP_2                            00000031
+MAIN                              00000020
+NOT_BOD                           00000000
+NOT_BOR                           00000000
+NOT_DONE                          00000001
+NOT_GPPU                          00000007
+NOT_PD                            00000003
+NOT_POR                           00000001
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+OPTION_REG                        00000081
+OSCCAL                            00000090
+PCL                               00000002
+PCLATH                            0000000A
+PCON                              0000008E
+PEIE                              00000006
+PIE1                              0000008C
+PIR1                              0000000C
+MPASM 5.77  /HOME/GUS/MPLABXPROJECTS/ATV_MC_   3-9-2025  15:30:53         PAGE  8
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+RD                                00000000
+RP0                               00000005
+RP1                               00000006
+SAI_INT                           00000008
+STATUS                            00000003
+STATUS_TEMP                       00000021
+SUBROTINA1                        0000000D
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1IE                              00000000
+T1IF                              00000000
+T1OSCEN                           00000003
+TMR0                              00000001
+TMR0IE                            00000005
+TMR0IF                            00000002
+TMR1                              0000000E
+TMR1CS                            00000001
+TMR1GE                            00000006
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TRISIO                            00000085
+TRISIO0                           00000000
+TRISIO1                           00000001
+TRISIO2                           00000002
+TRISIO3                           00000003
+TRISIO4                           00000004
+TRISIO5                           00000005
+VCFG                              00000006
+VR0                               00000000
+VR1                               00000001
+VR2                               00000002
+VR3                               00000003
+VRCON                             00000099
+VREN                              00000007
+VRR                               00000005
+W                                 00000000
+WPU                               00000095
+WPU0                              00000000
+WPU1                              00000001
+WPU2                              00000002
+WPU4                              00000004
+MPASM 5.77  /HOME/GUS/MPLABXPROJECTS/ATV_MC_   3-9-2025  15:30:53         PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+WPU5                              00000005
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+W_TEMP                            00000020
+Z                                 00000002
+_BODEN_OFF                        00003FBF
+_BODEN_ON                         00003FFF
+_BOREN_OFF                        00003FBF
+_BOREN_ON                         00003FFF
+_CONFIG                           00002007
+_CPD_OFF                          00003FFF
+_CPD_ON                           00003EFF
+_CP_OFF                           00003FFF
+_CP_ON                            00003F7F
+_DEVID1                           00002006
+_EC_OSC                           00003FFB
+_EXTRC_OSC_CLKOUT                 00003FFF
+_EXTRC_OSC_NOCLKOUT               00003FFE
+_FOSC_EC                          00003FFB
+_FOSC_EXTRCCLK                    00003FFF
+_FOSC_EXTRCIO                     00003FFE
+_FOSC_HS                          00003FFA
+_FOSC_INTRCCLK                    00003FFD
+_FOSC_INTRCIO                     00003FFC
+_FOSC_LP                          00003FF8
+_FOSC_XT                          00003FF9
+_HS_OSC                           00003FFA
+_IDLOC0                           00002000
+_IDLOC1                           00002001
+_IDLOC2                           00002002
+_IDLOC3                           00002003
+_INTRC_OSC_CLKOUT                 00003FFD
+_INTRC_OSC_NOCLKOUT               00003FFC
+_LP_OSC                           00003FF8
+_MCLRE_OFF                        00003FDF
+_MCLRE_ON                         00003FFF
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FEF
+_WDTE_OFF                         00003FF7
+_WDTE_ON                          00003FFF
+_WDT_OFF                          00003FF7
+_WDT_ON                           00003FFF
+_XT_OSC                           00003FF9
+__12F675                          00000001
+__DEBUG                           
+__MPLAB_DEBUGGER_SIMULATOR        1
+MPASM 5.77  /HOME/GUS/MPLABXPROJECTS/ATV_MC_   3-9-2025  15:30:53         PAGE 10
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+
+0000 : X---XXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXX---------
+2000 : -------X-------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    52
+Program Memory Words Free:   972
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     6 reported,     0 suppressed
+
+

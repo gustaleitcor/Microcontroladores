@@ -1,0 +1,54 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Tue Apr 15 08:43:12 2025
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000000
+                   .org_1       code   0x000000    program   0x000002
+                   .org_2       code   0x000004    program   0x000170
+.config_2007_/HOME/GUS/MPLABXPROJECTS/ATV_MC_       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000000      
+                            0x000004    0x0000bb      
+                            0x002007    0x002007      
+            186 out of 1158 program addresses used, program memory utilization is 16%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                CONV_LOOP   0x000078    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                   INICIO   0x000017    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                LOOP_50MS   0x00000f    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                LOOP_99US   0x000014    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                     MAIN   0x000025    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                  SAI_INT   0x000007    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                    START   0x00002e    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                     STOP   0x000027    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                WAIT_50MS   0x00000c    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                WAIT_99US   0x000012    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                  SAI_INT   0x000007    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                WAIT_50MS   0x00000c    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                LOOP_50MS   0x00000f    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                WAIT_99US   0x000012    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                LOOP_99US   0x000014    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                   INICIO   0x000017    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                     MAIN   0x000025    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                     STOP   0x000027    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                    START   0x00002e    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+                CONV_LOOP   0x000078    program     static /home/gus/MPLABXProjects/ATV_MC_9.X/Vazio.ASM
+
+
